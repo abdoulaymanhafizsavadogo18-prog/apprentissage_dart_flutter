@@ -18,11 +18,15 @@ bool depasseBudget({
 
 void afficherResume({
     required String nom,
-    required double solde,
+    required double revenus,
+    required double depenses,
     String devise ='MAD',
 }){
+    double solde = calculerSolde(revenus: revenus, depenses: depenses);
     print("nom :$nom");
-    print('$solde $devise');
+    print("revenus : $revenus");
+    print("depenses : $depenses");
+    print("$solde $devise");
     
 }
 
@@ -33,5 +37,5 @@ void main(){
     bool depassement= depasseBudget(revenus: 8500, depenses: 3200.75);
         print("depassement : $depassement");
 
-    afficherResume(nom: "Amadou", solde: 4000);
+    afficherResume(nom: "Amadou",revenus: 8500, depenses: 3200.75);
 }
