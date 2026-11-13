@@ -3,7 +3,7 @@ class Transaction{
     final String _libelle;
     double _montant;
     final String _categorie;
-    final String _type;
+    final  TypeTransaction _type;
 
     //constructeur
 
@@ -11,13 +11,13 @@ class Transaction{
         required String libelle,
         required double montant,
         required String categorie,
-        required String type,
+        required  TypeTransaction type,
         
     }):
     _libelle =libelle,
     _montant = montant>0 ? montant : throw ArgumentError('Montant invalide'),
     _categorie = categorie,
-    _type=type;
+     _type= type;
 
 
     double get montant{
@@ -35,14 +35,14 @@ class Transaction{
 
     }
 
-    String get type{
+   TypeTransaction get type{
         return _type;
 
     }
 
-    set montant(double new_montant){
-        if (new_montant >0){
-            _montant = new_montant;
+    set montant(double newMontant){
+        if (newMontant >0){
+            _montant = newMontant;
 
         }
         else {
@@ -56,28 +56,45 @@ class Transaction{
 
     //Création des methodes
     bool estUneDepense(){
-        return _type == 'depense';
+        return  _type == TypeTransaction.depense;
         
 
         
 
     }
+
+    String obtenirLibelleType(){
+        if (type == TypeTransaction.depense) {
+            return'Cette transaction est une dépense';
+        }
+        else {
+            return'cette transaction est un revenu';
+        }
+    }
+
     void afficherDetails(){
         print('libelle: $_libelle');
         print('montant : $montant MAD');
         print('categorie : $_categorie');
         print('type : $_type');
+        print('type : ${obtenirLibelleType()}');
 
     }
 }
 
-void main(){
-    final revenu = Transaction(libelle: 'Mon salaire', montant: 8500, categorie: 'salaire', type: 'revenu');
+enum TypeTransaction{
+        revenu,
+        depense
+    }
 
-    final depense = Transaction(libelle: 'Mes depenses', montant: 300, categorie: 'Alimentation', type: 'depense');
+void main(){
+    final revenu = Transaction(libelle: 'Mon salaire', montant: 8500, categorie: 'salaire', type: TypeTransaction.revenu);
+
+    final depense = Transaction(libelle: 'Mes depenses', montant: 300, categorie: 'Alimentation', type: TypeTransaction.depense);
 
     revenu.afficherDetails();
     depense.afficherDetails();
     print(revenu.estUneDepense());
     print(depense.estUneDepense());
+    print(depense.obtenirLibelleType());
 }
